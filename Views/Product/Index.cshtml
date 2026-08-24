@@ -1,0 +1,51 @@
+﻿@model List<_241230812_NguyenThiNhung_BTThucHanh_BTVN.Models.Product>
+@{
+    ViewData["Title"] = "Danh sách sản phẩm";
+    var categories = ViewBag.Categories as List<_241230812_NguyenThiNhung_BTThucHanh_BTVN.Models.Category>;
+}
+
+<div class="row mt-4">
+    <!-- Cột bên trái: DANH MỤC -->
+    <div class="col-md-3">
+        <h5 class="text-uppercase mb-3">DANH MỤC</h5>
+        <div class="list-group rounded-0">
+            @foreach (var cat in categories)
+            {
+                <a asp-route="product" asp-route-categoryId="@cat.Id" class="list-group-item list-group-item-action text-muted" style="font-size: 14px;">
+                    @cat.Name
+                </a>
+            }
+        </div>
+    </div>
+
+    <!-- Cột bên phải: SẢN PHẨM -->
+    <div class="col-md-9">
+        <h4 class="mb-3">Danh sách sản phẩm</h4>
+        <div class="row">
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 rounded-0 shadow-sm border-light">
+                            <!-- Ảnh sản phẩm -->
+                            <img src="@item.Image" class="card-img-top rounded-0 p-2" alt="@item.Name" style="height: 250px; object-fit: contain;">
+
+                            <div class="card-body d-flex flex-column">
+                                <h6 class="card-title text-dark">@item.Name</h6>
+
+                                <!-- Định dạng giá giống hệt ảnh: Giá: <del>50000</del> Giá: 35000 -->
+                                <p class="card-text text-muted mb-3" style="font-size: 13px;">
+                                    Giá: <del>@item.Price</del> Giá: @item.SalePrice
+                                </p>
+
+                                <!-- Nút chi tiết màu xanh -->
+                                <a asp-route="product_detail" asp-route-id="@item.Id" class="btn btn-success btn-sm mt-auto rounded-0">Chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

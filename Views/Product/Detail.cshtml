@@ -1,0 +1,28 @@
+﻿@model _241230812_NguyenThiNhung_BTThucHanh_BTVN.Models.Product
+@{
+    ViewData["Title"] = "Chi tiết sản phẩm";
+}
+
+<h3 class="mt-4">Chi tiết sản phẩm</h3>
+<div class="row mt-3">
+    <div class="col-md-4">
+        <img src="@Model.Image" alt="@Model.Name" style="width: 100%" class="border" />
+    </div>
+    <div class="col-md-8">
+        <h4>Sản phẩm: @Model.Name</h4>
+        <p class="text-muted">
+            Giá gốc: <del>@string.Format("{0:N0} đ", Model.Price)</del> &nbsp;&nbsp;&nbsp;
+            <b class="text-danger">Giá mới: @string.Format("{0:N0} đ", Model.SalePrice)</b>
+        </p>
+
+        <h5>Mô Tả:</h5>
+        <p>@Model.Description</p>
+
+        <p><b>Trạng thái:</b> @(Model.Status ? "Còn hàng" : "Hết hàng")</p>
+        <p><b>Ngày đăng:</b> @Model.CreatedAt.ToString("dd/MM/yyyy hh:mm:ss tt")</p>
+
+        <p class="mt-4">
+            <a asp-route="product" class="btn btn-danger">Về danh sách</a>
+        </p>
+    </div>
+</div>

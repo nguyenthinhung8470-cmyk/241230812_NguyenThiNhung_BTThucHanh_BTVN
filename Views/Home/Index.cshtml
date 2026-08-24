@@ -1,0 +1,58 @@
+﻿@model List<_241230812_NguyenThiNhung_BTThucHanh_BTVN.Models.Product>
+@{
+    ViewData["Title"] = "Danh sách sản phẩm";
+
+    // Ép kiểu với đúng tên project của bạn và chống lỗi null
+    var categories = ViewBag.Categories as List<_241230812_NguyenThiNhung_BTThucHanh_BTVN.Models.Category>
+                     ?? new List<_241230812_NguyenThiNhung_BTThucHanh_BTVN.Models.Category>();
+}
+
+<div class="row mt-4">
+    <!-- Cột bên trái: DANH MỤC -->
+    <div class="col-md-3">
+        <h5 class="text-uppercase">DANH MỤC</h5>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a asp-route="product" class="text-decoration-none text-dark">Tất cả sản phẩm</a>
+            </li>
+            @foreach (var cat in categories)
+            {
+                <li class="list-group-item">
+                    <a asp-route="product" asp-route-categoryId="@cat.Id" class="text-decoration-none text-dark">@cat.Name</a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <!-- Cột bên phải: SẢN PHẨM -->
+    <div class="col-md-9">
+        <h5>Danh sách sản phẩm</h5>
+        <div class="row">
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <img src="@item.Image" class="card-img-top" alt="@item.Name">
+                            <div class="card-body d-flex flex-column">
+                                <h6 class="card-title">@item.Name</h6>
+                                <p class="card-text text-muted mb-2">
+                                    Giá: <del>@string.Format("{0:N0} đ", item.Price)</del> <br />
+                                    <b>Giá: @string.Format("{0:N0} đ", item.SalePrice)</b>
+                                </p>
+                                <a asp-route="product_detail" asp-route-id="@item.Id" class="btn btn-success mt-auto">Chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <p class="alert alert-warning">Hiện chưa có sản phẩm nào trong danh mục này.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
